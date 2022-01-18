@@ -12,20 +12,23 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import com.affirm.takehome.adapter.RestaurantAdapter
+import com.affirm.takehome.databinding.ActivityMainBinding
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates.observable
 
 private const val LOCATION_PERMISSION_CODE = 101
 private const val THUMB_UP = R.drawable.thumb_up
 private const val THUMB_DOWN = R.drawable.thumb_down
-private const val TAG = "MainActivity"
+private val TAG = MainActivity::class.simpleName
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     private var animating = false
 
@@ -34,11 +37,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var yesCounter: Int by observable(0) { _, _, newValue ->
-        yesCounterText.text = newValue.toString()
+        binding.yesCounterText.text = newValue.toString()
     }
 
     private var noCounter: Int by observable(0) { _, _, newValue ->
-        noCounterText.text = newValue.toString()
+        binding.noCounterText.text = newValue.toString()
     }
 
     private val fusedLocationProviderClient by lazy {
@@ -49,48 +52,53 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        initView()
+    }
 
-        viewPager.adapter = restaurantAdapter
-        // Only allow button input, swiping not allowed
-        viewPager.isUserInputEnabled = false
+    private fun initView() {
+        with(binding) {
+            viewPager.adapter = restaurantAdapter
+            // Only allow button input, swiping not allowed
+            viewPager.isUserInputEnabled = false
 
-        yesButton.setOnClickListener {
-            // Make sure the previous animation finishes
-            if (!animating) {
-                yesCounter++
-                viewPager.currentItem = viewPager.currentItem + 1
-                animateIcon(THUMB_UP)
+            yesButton.setOnClickListener {
+                // Make sure the previous animation finishes
+                if (!animating) {
+                    yesCounter++
+                    viewPager.currentItem = viewPager.currentItem + 1
+                    animateIcon(THUMB_UP)
+                }
             }
-        }
 
-        noButton.setOnClickListener {
-            if (!animating) {
-                noCounter++
-                viewPager.currentItem = viewPager.currentItem + 1
-                animateIcon(THUMB_DOWN)
+            noButton.setOnClickListener {
+                if (!animating) {
+                    noCounter++
+                    viewPager.currentItem = viewPager.currentItem + 1
+                    animateIcon(THUMB_DOWN)
+                }
             }
+
+            yesCounterText.text = yesCounter.toString()
+            noCounterText.text = noCounter.toString()
+
+            checkAndRequestPermissionsForLocation()
         }
-
-        yesCounterText.text = yesCounter.toString()
-        noCounterText.text = noCounter.toString()
-
-        checkAndRequestPermissionsForLocation()
     }
 
     private fun animateIcon(drawable: Int) {
         animating = true
-        icon.setImageDrawable(ContextCompat.getDrawable(this, drawable))
-        icon.alpha = 0.5f
-        icon.visibility = View.VISIBLE
-        icon.animate()
+        binding.icon.setImageDrawable(ContextCompat.getDrawable(this, drawable))
+        binding.icon.alpha = 0.5f
+        binding.icon.visibility = View.VISIBLE
+        binding.icon.animate()
             .alpha(1f)
             .setDuration(300)
             .scaleX(2f)
             .scaleY(2f)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    icon.visibility = View.GONE
+                    binding.icon.visibility = View.GONE
                     animating = false
                 }
             })
@@ -106,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == LOCATION_PERMISSION_CODE) {
             if ((grantResults.isNotEmpty() &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED)
             ) {
                 loadLocation()
             } else {
