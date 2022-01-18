@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -162,7 +163,7 @@ class MainActivity : AppCompatActivity() {
                             fusedLocationProviderClient.removeLocationUpdates(this)
                         }
                     },
-                    null
+                    Looper.getMainLooper()
                 )
             } else {
                 // TODO: load restaurants using "location"

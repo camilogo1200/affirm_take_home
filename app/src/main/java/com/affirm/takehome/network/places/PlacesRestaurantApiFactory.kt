@@ -12,28 +12,28 @@ private const val PLACES_API_BASE_URL = "https://maps.googleapis.com/maps/api/pl
 
 class PlacesRestaurantApiFactory {
 
-  companion object {
+    companion object {
+        @kotlinx.serialization.ExperimentalSerializationApi
+        fun create(): PlacesRestaurantApi {
+            val logging = HttpLoggingInterceptor()
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val httpClient = OkHttpClient.Builder()
+            httpClient.addInterceptor(logging)
 
-    fun create(): PlacesRestaurantApi {
-      val logging = HttpLoggingInterceptor()
-      logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-      val httpClient = OkHttpClient.Builder()
-      httpClient.addInterceptor(logging)
+            val contentType = "application/json".toMediaType()
+            val factory = Json {
+                isLenient = true
+                ignoreUnknownKeys = true
+            }.asConverterFactory(contentType)
 
-      val contentType = "application/json".toMediaType()
-      val factory = Json {
-        isLenient = true
-        ignoreUnknownKeys = true
-      }.asConverterFactory(contentType)
+            val retrofit = Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(factory)
+                .baseUrl(PLACES_API_BASE_URL)
+                .client(httpClient.build())
+                .build()
 
-      val retrofit = Retrofit.Builder()
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(factory)
-        .baseUrl(PLACES_API_BASE_URL)
-        .client(httpClient.build())
-        .build()
-
-      return PlacesRestaurantApi(retrofit.create(PlacesRestaurantService::class.java))
+            return PlacesRestaurantApi(retrofit.create(PlacesRestaurantService::class.java))
+        }
     }
-  }
 }

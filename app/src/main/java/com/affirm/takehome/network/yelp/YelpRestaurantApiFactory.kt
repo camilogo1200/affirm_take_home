@@ -13,6 +13,7 @@ private const val YELP_API_BASE_URL = "https://api.yelp.com/"
 
 class YelpRestaurantApiFactory {
     companion object {
+        @kotlinx.serialization.ExperimentalSerializationApi
         fun create(): YelpRestaurantApi {
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
