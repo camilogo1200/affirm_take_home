@@ -10,6 +10,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -17,6 +18,10 @@ import androidx.databinding.DataBindingUtil
 import com.affirm.takehome.R
 import com.affirm.takehome.databinding.ActivityMainBinding
 import com.affirm.takehome.ui.dashboard.adapter.RestaurantAdapter
+import com.affirm.takehome.ui.dashboard.view_states.DashBoardViewStates
+import com.affirm.takehome.ui.dashboard.view_states.ErrorLoadingRestaurants
+import com.affirm.takehome.ui.dashboard.view_states.RestaurantsLoaded
+import com.affirm.takehome.ui.dashboard.viewmodels.MainActivityViewModel
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -34,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainActivityViewModel by viewModels()
 
     private var animating = false
 
@@ -58,7 +64,30 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        bindObservables()
         initView()
+        checkAndRequestPermissionsForLocation()
+    }
+
+    private fun bindObservables() {
+        viewModel.viewState.observe(this, ::handleViewState)
+    }
+
+    private fun handleViewState(dashBoardViewStates: DashBoardViewStates?) {
+        dashBoardViewStates?.let { viewState ->
+            when (viewState) {
+                is RestaurantsLoaded -> handleRestaurantsLoaded()
+                is ErrorLoadingRestaurants -> handleErrorLoadingRestaurants()
+            }
+        }
+    }
+
+    private fun handleErrorLoadingRestaurants() {
+
+    }
+
+    private fun handleRestaurantsLoaded() {
+
     }
 
     private fun initView() {
@@ -70,7 +99,6 @@ class MainActivity : AppCompatActivity() {
             yesButton.setOnClickListener {
                 // Make sure the previous animation finishes
                 if (!animating) {
-                    yesCounter++
                     viewPager.currentItem = viewPager.currentItem + 1
                     animateIcon(THUMB_UP)
                 }
@@ -78,7 +106,6 @@ class MainActivity : AppCompatActivity() {
 
             noButton.setOnClickListener {
                 if (!animating) {
-                    noCounter++
                     viewPager.currentItem = viewPager.currentItem + 1
                     animateIcon(THUMB_DOWN)
                 }
@@ -86,8 +113,6 @@ class MainActivity : AppCompatActivity() {
 
             yesCounterText.text = yesCounter.toString()
             noCounterText.text = noCounter.toString()
-
-            checkAndRequestPermissionsForLocation()
         }
     }
 
@@ -109,7 +134,6 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-    @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -171,6 +195,7 @@ class MainActivity : AppCompatActivity() {
                 )
             } else {
                 // TODO: load restaurants using "location"
+                viewModel.loadRestaurants(location)
             }
         }
     }
