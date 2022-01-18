@@ -32,6 +32,7 @@ private val TAG = MainActivity::class.simpleName
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+
     private lateinit var binding: ActivityMainBinding
 
     private var animating = false
