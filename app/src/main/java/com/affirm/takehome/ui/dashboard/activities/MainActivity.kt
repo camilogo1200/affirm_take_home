@@ -1,4 +1,4 @@
-package com.affirm.takehome
+package com.affirm.takehome.ui.dashboard.activities
 
 import android.Manifest
 import android.animation.Animator
@@ -14,8 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.affirm.takehome.adapter.RestaurantAdapter
+import com.affirm.takehome.R
 import com.affirm.takehome.databinding.ActivityMainBinding
+import com.affirm.takehome.ui.dashboard.adapter.RestaurantAdapter
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult

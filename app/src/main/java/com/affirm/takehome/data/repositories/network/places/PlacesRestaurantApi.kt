@@ -1,4 +1,4 @@
-package com.affirm.takehome.network.places
+package com.affirm.takehome.data.repositories.network.places
 
 import retrofit2.Call
 

@@ -1,4 +1,4 @@
-package com.affirm.takehome.network.yelp
+package com.affirm.takehome.data.repositories.network.yelp
 
 import retrofit2.Call
 import retrofit2.http.GET
