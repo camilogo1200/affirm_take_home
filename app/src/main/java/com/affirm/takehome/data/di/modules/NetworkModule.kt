@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
+    private const val APPLICATION_JSON_MEDIA_TYPE = "application/json"
     private const val YELP_API_BASE_URL = "https://api.yelp.com/"
     private const val PLACES_API_BASE_URL = "https://maps.googleapis.com/maps/api/place/"
     private const val CONNECTION_TIMEOUT = 10L
@@ -62,9 +62,8 @@ object NetworkModule {
     @ExperimentalSerializationApi
     @Provides
     fun providesKotlinxConverterFactory(): Converter.Factory {
-        val contentType = "application/json".toMediaType()
-        val factory = jsonProperties.asConverterFactory(contentType)
-        return factory
+        val contentType = APPLICATION_JSON_MEDIA_TYPE.toMediaType()
+        return jsonProperties.asConverterFactory(contentType)
     }
 
     @Provides
