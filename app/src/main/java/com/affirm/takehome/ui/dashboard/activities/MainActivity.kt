@@ -21,6 +21,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates.observable
 
 private const val LOCATION_PERMISSION_CODE = 101
@@ -28,6 +29,7 @@ private const val THUMB_UP = R.drawable.thumb_up
 private const val THUMB_DOWN = R.drawable.thumb_down
 private val TAG = MainActivity::class.simpleName
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
