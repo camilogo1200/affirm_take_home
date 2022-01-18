@@ -2,6 +2,12 @@ package com.affirm.takehome.data.di.modules
 
 import com.affirm.takehome.data.repositories.datasource.DataSourceSelectorRepository
 import com.affirm.takehome.data.repositories.datasource.interfaces.IDataSourceSelectorRepository
+import com.affirm.takehome.data.repositories.feedback.FeedBackRepository
+import com.affirm.takehome.data.repositories.feedback.LocalFeedBackRepository
+import com.affirm.takehome.data.repositories.feedback.RemoteFeedBackRepository
+import com.affirm.takehome.data.repositories.feedback.interfaces.IFeedBackRepository
+import com.affirm.takehome.data.repositories.feedback.interfaces.ILocalFeedBackRepository
+import com.affirm.takehome.data.repositories.feedback.interfaces.IRemoteFeedBackRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,5 +19,14 @@ abstract class RepositoriesModule {
 
     @Binds
     abstract fun bindsDataSourceSelectorRepository(repository: DataSourceSelectorRepository): IDataSourceSelectorRepository
+
+    @Binds
+    abstract fun bindsFeedBackRepository(repository: FeedBackRepository): IFeedBackRepository
+
+    @Binds
+    abstract fun bindsLocalFeedBackRepository(repository: LocalFeedBackRepository): ILocalFeedBackRepository
+
+    @Binds
+    abstract fun bindsRemoteFeedBackRepository(repository: RemoteFeedBackRepository): IRemoteFeedBackRepository
 
 }

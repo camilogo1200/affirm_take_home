@@ -25,9 +25,8 @@ class LoadRestaurants @Inject constructor(
 
     private suspend fun isYelpDataSource(): Boolean {
         val datasource = dataSourceSelectorRepository.getNextDataSourceOrigin()
-        if (datasource.isSuccess) {
-            return datasource.equals(YELP_DATASOURCE_NAME)
-        }
-        return false
+        return if (datasource.isSuccess) {
+            datasource.equals(YELP_DATASOURCE_NAME)
+        } else false
     }
 }
