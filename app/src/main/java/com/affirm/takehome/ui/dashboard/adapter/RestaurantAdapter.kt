@@ -1,11 +1,11 @@
-package com.affirm.takehome.adapter
+package com.affirm.takehome.ui.dashboard.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.affirm.takehome.R
-import com.affirm.takehome.data.Restaurant
+import com.affirm.takehome.domain.models.Restaurant
 import com.affirm.takehome.databinding.RestaurantItemViewBinding
 import com.squareup.picasso.Picasso
 

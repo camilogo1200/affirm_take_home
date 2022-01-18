@@ -1,4 +1,4 @@
-package com.affirm.takehome.network.yelp
+package com.affirm.takehome.data.repositories.network.yelp
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json

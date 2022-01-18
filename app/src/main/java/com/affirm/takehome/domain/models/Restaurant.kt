@@ -1,4 +1,4 @@
-package com.affirm.takehome.data
+package com.affirm.takehome.domain.models
 
 data class Restaurant(
     val id: String,

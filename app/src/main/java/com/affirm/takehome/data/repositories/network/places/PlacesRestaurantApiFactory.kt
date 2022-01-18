@@ -1,4 +1,4 @@
-package com.affirm.takehome.network.places
+package com.affirm.takehome.data.repositories.network.places
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
