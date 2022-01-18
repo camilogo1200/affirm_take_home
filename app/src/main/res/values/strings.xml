@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">TakeHome</string>
+  <string name="yes">YESSS</string>
+  <string name="meh">MEHHH</string>
+
+  <string name="load_data_error">Could not load the data.</string>
+  <string name="no_permission">No Permission</string>
+</resources>
