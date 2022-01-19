@@ -1,8 +1,7 @@
 # affirm_take_home
 
 ### Note: 
-there was a major descition before start to work on the project that was start doing maintenance and upgrade the api version to api 32
-all this maintenance task that I did into the projectare in the __App Maintenance & Enhancements__ sections at the end of this file.
+There was a major decision before starting to work on the project that was to start doing maintenance (remove deprecated code, update code, etc..) and upgrade the API version to API 32 all these maintenance tasks that I did into the project are in the __App Maintenance & Enhancements__ sections at the end of this file.
 
 # Solution description
 
