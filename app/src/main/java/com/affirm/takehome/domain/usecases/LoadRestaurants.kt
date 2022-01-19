@@ -19,18 +19,16 @@ class LoadRestaurants @Inject constructor(
     }
 
     override suspend fun invoke(latitude: Double, longitude: Double): Result<List<Restaurant>> {
-        return if (isYelpDataSource()) {
-            loadYelpRestaurantsUC.invoke(latitude, longitude)
-        } else loadPlacesRestaurantsUC.invoke(latitude, longitude)
+        return when (getDataSource()) {
+            ServiceProvider.YELP -> loadYelpRestaurantsUC.invoke(latitude, longitude)
+            ServiceProvider.PLACES -> loadPlacesRestaurantsUC.invoke(latitude, longitude)
+        }
     }
 
-    private suspend fun isYelpDataSource(): Boolean {
+    private suspend fun getDataSource(): ServiceProvider {
         val datasource = dataSourceSelectorRepository.getNextDataSourceOrigin()
         return if (datasource.isSuccess) {
-            when (datasource.getOrNull()) {
-                ServiceProvider.YELP -> true
-                else -> false
-            }
-        } else false
+            return datasource.getOrNull() ?: ServiceProvider.YELP
+        } else ServiceProvider.YELP
     }
 }
