@@ -10,7 +10,7 @@ class LoadYelpRestaurants @Inject constructor(
     private val restaurantsRepository: IRestaurantsRepository
 ) : ILoadYelpRestaurants {
     override suspend fun invoke(latitude: Double, longitude: Double): Result<List<Restaurant>> {
-        val limit = 20 // limit of results -> this should be stored on app settings repo
+        val limit = 3 // limit of results -> this should be stored on app settings repo
         val result =
             restaurantsRepository.getYelpRestaurants(
                 ServiceProvider.YELP,

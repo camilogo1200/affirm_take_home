@@ -13,7 +13,7 @@ interface YelpRestaurantService {
         @Header(value = "Authorization") token: String = TOKEN,
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
-        @Query("offset") offset: Int = 0,
+        @Query("offset") offset: Int =0,
         @Query("limit") limit: Int = 50
     ): Response<YelpResponse>
 

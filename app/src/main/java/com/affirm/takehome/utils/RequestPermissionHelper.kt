@@ -29,9 +29,7 @@ class RequestPermissionHelper(
     private val mockLocation = true
 
     private val fusedLocationProviderClient by lazy {
-        LocationServices.getFusedLocationProviderClient(
-            context
-        )
+        LocationServices.getFusedLocationProviderClient(context)
     }
 
     fun checkAndRequestPermissionsForLocation() {
@@ -127,7 +125,8 @@ class RequestPermissionHelper(
             }.addOnFailureListener {
                 Log.d(
                     TAG,
-                    it.message ?: "Error mocking location. Check developer settings -> mock location on device"
+                    it.message
+                        ?: "Error mocking location. Check developer settings -> mock location on device"
                 )
             }
     }

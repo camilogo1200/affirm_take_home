@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.viewpager2.widget.ViewPager2
 import com.affirm.takehome.R
 import com.affirm.takehome.databinding.ActivityMainBinding
 import com.affirm.takehome.domain.models.Restaurant
@@ -46,10 +47,35 @@ class MainActivity : AppCompatActivity() {
         viewModel.viewState.observe(this, ::handleViewState)
     }
 
+    private fun handleFetchMoreRestaurants(position: Int?) {
+        viewModel.fetchMoreRestaurants()
+    }
+
     private fun initView() {
         binding.viewModel = viewModel
-        binding.viewPager.adapter = restaurantAdapter
-        viewModel.initView()
+        binding.viewPager.apply {
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    if (state == ViewPager2.SCROLL_STATE_IDLE || state == ViewPager2.SCROLL_STATE_DRAGGING) {
+                        if (currentItem == adapter?.itemCount?.minus(1)) {
+                            viewModel.fetchMoreRestaurants()
+                        }
+                    }
+                }
+
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                }
+            })
+
+            adapter = restaurantAdapter
+            viewModel.initView()
+        }
     }
 
     private fun handleViewState(dashBoardViewStates: DashBoardViewStates?) {

@@ -20,6 +20,7 @@ class MainActivityViewModel @Inject constructor(
     private val addFeedBack: IAddFeedBack
 ) : ViewModel() {
 
+    private lateinit var lastLocation: Location
     private val _viewState = MutableLiveData<DashBoardViewStates>()
     val viewState = _viewState.asLiveData()
 
@@ -46,7 +47,12 @@ class MainActivityViewModel @Inject constructor(
         _viewState.value = viewState
     }
 
+    fun fetchMoreRestaurants() {
+        loadRestaurants(lastLocation)
+    }
+
     fun loadRestaurants(location: Location) {
+        lastLocation = location
         viewModelScope.launch {
             isLoading.set(true)
             val result = loadRestaurantsUC.invoke(location.latitude, location.longitude)

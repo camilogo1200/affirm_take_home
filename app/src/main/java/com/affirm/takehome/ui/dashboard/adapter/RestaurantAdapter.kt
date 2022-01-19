@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.affirm.takehome.R
-import com.affirm.takehome.domain.models.Restaurant
 import com.affirm.takehome.databinding.RestaurantItemViewBinding
+import com.affirm.takehome.domain.models.Restaurant
 import com.squareup.picasso.Picasso
 
 class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
@@ -14,9 +14,8 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewH
     private val restaurantList = mutableListOf<Restaurant>()
 
     fun addRestaurants(restaurants: List<Restaurant>) {
-        val oldPosition = restaurants.size
+        val oldPosition = this.restaurantList.size
         restaurantList.addAll(restaurants)
-
         notifyItemRangeChanged(oldPosition, restaurants.size)
     }
 
