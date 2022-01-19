@@ -1,5 +1,60 @@
 # affirm_take_home
 
+### Note: 
+there was a major descition before start to work on the project that was start doing maintenance and upgrade the api version to api 32
+all this maintenance task that I did into the projectare in the __App Maintenance & Enhancements__ sections at the end of this file.
+
+# Solution description
+
+The application was implemented following the next paratemers 
+
+- **Workflow schema**: Gitflow (you can see the evolution of the app in the PR section of this repo)
+- **Architectural Pattern :**  Clean arquitecture
+- **UI - View Design Patterns** MVVM - Model-View-ViewModel
+- **View Handling :** Reactive views using view states on sealed interfaces
+- **MultiThreading handling :** Coroutines
+- **Dependency Injection :** Dagger - HILT
+  - Injectors for coroutine dipatchers
+  - Injectors for use cases
+  - Injectors for Repositories 
+- **Network Stack :** Retrofit with suspended functions / kotlinx serialization
+- **Jetpack Libraries / Components**:
+   - ViewModel
+   - LiveData
+   - ViewPager2
+   - Lifecycle
+   - Databinding
+   - Hilt
+  
+- **Layers / folder structure:**
+
+(Every layer was build thinking on feature folder structure, because we'll need to split into several modules if need to scale on different teams)
+
+## UI
+![image](https://user-images.githubusercontent.com/456256/150107424-9ba2b00a-0bb4-4349-ba10-1a7447b8607d.png)
+  - ui : ui related components
+     - feature folder name IE. dashboard 
+        - activities
+        - viewmodels
+        - fragments
+        - adapters
+        - viewstates
+ 
+ ## Domain
+![image](https://user-images.githubusercontent.com/456256/150107644-369fd2e1-195c-4796-a065-ed22e2f1a1c0.png)
+
+  - domain:
+
+## Data
+![image](https://user-images.githubusercontent.com/456256/150108917-0988f9a8-624e-4719-a686-4110519f149a.png)
+
+  - data:
+
+## Utils
+![image](https://user-images.githubusercontent.com/456256/150109021-3e1363df-7663-4273-9e15-fb970f58df15.png)
+
+  - utils:
+
 ## Changelog
 
 ### App Maintenance
