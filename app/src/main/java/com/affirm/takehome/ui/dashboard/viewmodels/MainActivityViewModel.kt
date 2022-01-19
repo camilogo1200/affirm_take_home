@@ -49,7 +49,7 @@ class MainActivityViewModel @Inject constructor(
     fun loadRestaurants(location: Location) {
         viewModelScope.launch {
             isLoading.set(true)
-            val result = loadRestaurantsUC.invoke()
+            val result = loadRestaurantsUC.invoke(location.latitude, location.longitude)
             if (result.isSuccess) {
                 val restaurants = result.getOrNull() ?: listOf()
                 setViewState(RestaurantsLoaded(restaurants))

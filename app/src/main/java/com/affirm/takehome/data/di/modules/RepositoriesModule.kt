@@ -8,6 +8,8 @@ import com.affirm.takehome.data.repositories.feedback.RemoteFeedBackRepository
 import com.affirm.takehome.data.repositories.feedback.interfaces.IFeedBackRepository
 import com.affirm.takehome.data.repositories.feedback.interfaces.ILocalFeedBackRepository
 import com.affirm.takehome.data.repositories.feedback.interfaces.IRemoteFeedBackRepository
+import com.affirm.takehome.data.repositories.restaurants.RestaurantsRepository
+import com.affirm.takehome.data.repositories.restaurants.interfaces.IRestaurantsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -29,4 +31,6 @@ abstract class RepositoriesModule {
     @Binds
     abstract fun bindsRemoteFeedBackRepository(repository: RemoteFeedBackRepository): IRemoteFeedBackRepository
 
+    @Binds
+    abstract fun bindRestaurantsRepository(repository: RestaurantsRepository): IRestaurantsRepository
 }

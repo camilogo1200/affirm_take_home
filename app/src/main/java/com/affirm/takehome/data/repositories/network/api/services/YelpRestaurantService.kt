@@ -1,6 +1,7 @@
 package com.affirm.takehome.data.repositories.network.api.services
 
 import com.affirm.takehome.data.repositories.network.api.dto.YelpResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
@@ -12,8 +13,9 @@ interface YelpRestaurantService {
         @Header(value = "Authorization") token: String = TOKEN,
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
-        @Query("offset") offset: Int = 0
-    ): YelpResponse
+        @Query("offset") offset: Int = 0,
+        @Query("limit") limit: Int = 50
+    ): Response<YelpResponse>
 
     companion object {
         private const val TOKEN =
