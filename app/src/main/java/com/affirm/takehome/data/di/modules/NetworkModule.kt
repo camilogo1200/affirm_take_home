@@ -2,6 +2,8 @@ package com.affirm.takehome.data.di.modules
 
 import com.affirm.takehome.data.repositories.network.api.services.PlacesRestaurantService
 import com.affirm.takehome.data.repositories.network.api.services.YelpRestaurantService
+import com.affirm.takehome.data.repositories.network.manager.interfaces.INetworkManager
+import com.affirm.takehome.data.repositories.network.manager.interfaces.NetworkManager
 import com.affirm.takehome.utils.network.LoggingInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -16,6 +18,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -78,6 +81,12 @@ object NetworkModule {
     @Provides
     fun provideInterceptor(): Interceptor {
         return LoggingInterceptor()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkManager(): INetworkManager {
+        return NetworkManager()
     }
 
 }
